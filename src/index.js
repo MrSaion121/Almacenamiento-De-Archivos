@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./src/routes');
+const routes = require('./routes');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 
@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 
 
 app.use(fileUpload());
+app.use('/', express.static(path.join(__dirname, '..','public')))
 //app.use(express.json());
 app.use('/', routes);
 

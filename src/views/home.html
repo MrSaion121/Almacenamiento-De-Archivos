@@ -3,24 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de OneDrive</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ArchITESO</title>
+    <link rel="stylesheet" href="/styles/home.css">
 </head>
 <body>
     <!-- Navbar -->
     <header>
         <nav>
             <ul>
-                <li><button onclick="goHome()">Home</button></li>
+                <li><button onclick="window.location.href='/home'">Home</button></li>
                 <li><button onclick="openModal('uploadModal')">Subir</button></li>
                 <li><button onclick="openModal('downloadModal')">Descargar</button></li>
+                <li class="account"><button onclick="window.location.href='/login'">Iniciar sesión</button></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main>
-        <!-- Welcome Message -->
         <section>
             <h1>Bienvenid@ {{name}}</h1>
         </section>
@@ -40,7 +39,6 @@
                 <span>20KB</span>
                 <span>Otros datos</span>
             </div>
-            <!-- Más elementos de archivo según sea necesario -->
         </section>
     </main>
 
@@ -67,7 +65,6 @@
                 <label for="file1">Archivo1.txt</label>
                 <input type="checkbox" id="file2">
                 <label for="file2">Archivo2.txt</label>
-                <!-- Más opciones de archivo -->
             </div>
             <div class="modal-actions">
                 <button onclick="downloadFiles()">Descargar</button>
@@ -80,7 +77,6 @@
     <footer>
         <p>Copyright by ....</p>
     </footer>
-
-    <script src="script.js"></script>
+    <script src="/scripts/home.modal.js"></script>
 </body>
 </html>
