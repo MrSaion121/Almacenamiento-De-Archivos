@@ -1,5 +1,3 @@
-// public/scripts/modal.js
-
 // Función para abrir el modal
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
@@ -21,7 +19,7 @@ function uploadFile() {
     const fileInput = document.getElementById('fileUpload');
     const file = fileInput.files[0];
     if (file) {
-        // Lógica para subir el archivo
+        //Example | para subir archivos
         console.log(`Subiendo archivo: ${file.name}`);
         closeModal('uploadModal');
     } else {
@@ -32,10 +30,11 @@ function uploadFile() {
 // Función para manejar la descarga de archivos (ejemplo básico)
 function downloadFiles() {
     const selectedFiles = document.querySelectorAll(".download-list input[type='checkbox']:checked");
+
+    //Example | para descargar archivos
     if (selectedFiles.length > 0) {
         selectedFiles.forEach(fileCheckbox => {
             console.log(`Descargando archivo: ${fileCheckbox.id}`);
-            // Aquí añadirías la lógica para descargar cada archivo seleccionado
         });
         closeModal('downloadModal');
     } else {
