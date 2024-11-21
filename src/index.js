@@ -37,9 +37,8 @@ const pool = mysql.createPool({
     port: process.env.DB_PORT
 });
 
-
-app.use(fileUpload());
 app.use('/', express.static(path.join(__dirname, '..', 'public')))
+//app.use('/', express.static(path.join(__dirname, '..', 'src')))
 //app.use(express.json());
 app.use('/', routes);
 

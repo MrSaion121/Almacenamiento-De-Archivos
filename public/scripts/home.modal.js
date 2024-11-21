@@ -41,3 +41,19 @@ function downloadFiles() {
         alert("Selecciona al menos un archivo para descargar.");
     }
 }
+
+function uploadFile(){
+    const file = document.getElementById('fileUpload')
+    //console.log(file.files[0]);
+    const formData = new FormData();
+    formData.append('file', file.files[0]); 
+    fetch(`/home/uploads`,{
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error:', error);
+    });
+    closeModal('uploadModal');
+}
