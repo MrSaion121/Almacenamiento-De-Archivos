@@ -1,13 +1,30 @@
+PORT=3000
+
 #===========================
 #      Credenciales AWS
 #===========================
 
-AWS_ACCESS_KEY_ID = 
-AWS_SECRET_ACCESS_KEY = 
-AWS_SESSION_TOKEN = 
-AWS_REGION = us-east-1
+AWS_ACCESS_KEY_ID =
+AWS_SECRET_ACCESS_KEY =
+AWS_SESSION_TOKEN =
+AWS_REGION =
 
 #===========================
 #      Bucket S3
 #===========================
-S3_BUCKET = 
+S3_BUCKET =
+S3_REGION =
+
+#===========================
+#      RDS Mysql
+#===========================
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+DB_PORT= 3306
+
+#===========================
+#      AWS SNS
+#===========================
+SNS_TOPIC_ARN=
