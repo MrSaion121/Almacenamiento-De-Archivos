@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchITESO</title>
+    <link rel="stylesheet" href="/styles/home.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <ul>
+                <li><button onclick="window.location.href='/home'">Home</button></li>
+                <li><button onclick="openModal('uploadModal')">Subir</button></li>
+                <li><button onclick="openModal('downloadModal')">Descargar</button></li>
+                <li class="account"><button onclick="window.location.href='/login'">Iniciar sesión</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>Bienvenid@ {{name}}</h1>
+        </section>
+
+        <!-- Files Container -->
+        <section class="files-container">
+            <div class="file-list-header">
+                <span>Seleccionar</span>
+                <span>Título del Archivo</span>
+                <span>Peso</span>
+                <span>Otros</span>
+            </div>
+
+            <div class="file-list-item">
+                <input type="checkbox" name="file1">
+                <span>Archivo1.txt</span>
+                <span>20KB</span>
+                <span>Otros datos</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Upload Modal -->
+    <aside id="uploadModal" class="modal">
+        <div class="modal-content">
+            <h2>Subir Archivo</h2>
+            <label for="fileUpload">Selecciona un archivo:</label>
+            <input type="file" id="fileUpload">
+            <div class="modal-actions">
+                <button onclick="uploadFile()">Subir</button>
+                <button onclick="closeModal('uploadModal')">Cancelar</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Download Modal -->
+    <aside id="downloadModal" class="modal">
+        <div class="modal-content">
+            <h2>Descargar Archivos</h2>
+            <p>Selecciona los archivos que deseas descargar:</p>
+            <div class="download-list">
+                <input type="checkbox" id="file1">
+                <label for="file1">Archivo1.txt</label>
+                <input type="checkbox" id="file2">
+                <label for="file2">Archivo2.txt</label>
+            </div>
+            <div class="modal-actions">
+                <button onclick="downloadFiles()">Descargar</button>
+                <button onclick="closeModal('downloadModal')">Cancelar</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer>
+        <p>Copyright by ....</p>
+    </footer>
+    <script src="/scripts/home.modal.js"></script>
+</body>
+</html>
