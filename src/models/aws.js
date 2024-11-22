@@ -11,7 +11,6 @@ AWS.config.update({
 });
 
 const s3 = new AWS.S3();
-
-const bucket = process.env.S3_BUCKET
+const bucket = process.env.AWS_BUCKET_NAME;
 
 module.exports = { s3, bucket}
