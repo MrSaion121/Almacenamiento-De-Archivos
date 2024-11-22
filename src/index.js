@@ -27,16 +27,20 @@ app.get('', (req, res) => {
     res.send("!Hola! Bienvenido a TiesOnDrive")
 })
 
-//Mensaje de conexion - RDS
-(async () => {
+// Función para verificar conexión con la base de datos
+async function verificarConexionDB() {
     try {
         const connection = await UserModel.connect();
-        console.log("Conexión con la base de datos RDS exitosa.");
+        console.log("✅ Conexión con la base de datos RDS exitosa.");
     } catch (error) {
-        console.error("Error al conectar con la base de datos RDS:", error.message);
+        console.error("❌ Error al conectar con la base de datos RDS:", error.message);
+        process.exit(1); // Terminar la ejecución si no se puede conectar
     }
-})();
+}
 
-app.listen(port, () => {
-    console.log(`API is running in port ${port}`)
-})
+// Llamar a la función antes de iniciar el servidor
+verificarConexionDB().then(() => {
+    app.listen(port, () => {
+        console.log(`🚀 API is running on port ${port}`);
+    });
+});
