@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     updateAccountButton();
     updateUserName();
+    loadFiles(); //Carga de archivos al iniciar
 });
 
 //Actualizar el boton de cuenta base al estado del user_id
@@ -44,6 +45,60 @@ function updateUserName() {
     }
 }
 
+//Funcion para obtener/mostrar los archivos desde el server
+async function loadFiles() {
+    const response = await fetch('/home/files');
+    const files = await response.json();
+
+    const fileListContainer = document.getElementById('fileListContainer');
+    fileListContainer.innerHTML = ''; // Limpiar el contenedor
+
+    //DOM
+    files.forEach(file => {
+        const fileElement = document.createElement('div');
+        fileElement.classList.add('file-list-item');
+        fileElement.innerHTML = `
+            <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
+            <label for="file-${file.Key}">${file.Key}</label>
+            <span>${(file.Size / 1024).toFixed(2)} KB</span>
+            <span>${new Date(file.LastModified).toLocaleDateString()}</span>
+        `;
+        fileListContainer.appendChild(fileElement);
+    });
+}
+
+//Funcion para descargar Archivos descargados.
+async function downloadFiles() {
+    const selectedFiles = Array.from(document.querySelectorAll(".file-list-item input[type='checkbox']:checked"))
+        .map(input => input.value); // Obtener las claves de los archivos seleccionados
+
+    if (selectedFiles.length > 0) {
+        const response = await fetch('/home/download', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ files: selectedFiles })
+        });
+
+        if (response.ok) {
+            const downloadUrls = await response.json();
+            downloadUrls.forEach(url => {
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = ''; // Asignar el nombre del archivo si es necesario
+                a.click();
+            });
+            closeModal('downloadModal');
+        } else {
+            alert('Hubo un error al obtener los archivos para descargar.');
+        }
+    } else {
+        alert("Selecciona al menos un archivo para descargar.");
+    }
+}
+
+
 
 // Función para abrir el modal
 function openModal(modalId) {
@@ -75,6 +130,7 @@ function uploadFile() {
 }
 
 // Función para manejar la descarga de archivos (ejemplo básico)
+/*
 function downloadFiles() {
     const selectedFiles = document.querySelectorAll(".download-list input[type='checkbox']:checked");
 
@@ -88,6 +144,7 @@ function downloadFiles() {
         alert("Selecciona al menos un archivo para descargar.");
     }
 }
+*/
 
 function uploadFile() {
     const file = document.getElementById('fileUpload')

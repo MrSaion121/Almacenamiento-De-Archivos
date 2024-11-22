@@ -1,10 +1,13 @@
 const router = require('express').Router();
 const path = require('path');
+const HomeController = require('../controllers/home')
+
 const  upload  = require('../middlewares/s3')
 //GET | /home | home
 router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
+
 
 router.post('/uploads', upload.single('file'),(req,res) => {
     console.log(req.body)
@@ -16,8 +19,10 @@ router.post('/uploads', upload.single('file'),(req,res) => {
     }
 })
 
-function uploadFile(event){
-    
-}
+//GET | /home/files | Obtener archivos
+router.get('/files', HomeController.getFiles);
+
+//POST | /home/downloads | Descargar archivos seleccionados
+router.post('/download', HomeController.downloadFile);
 
 module.exports = router;
