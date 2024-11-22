@@ -29,10 +29,9 @@ async function validateForm() {
 
     // Verificar si la autenticación fue exitosa
     if (response.status === 200) {
+      alert("Iniciaste sesión correctamente");
       // Almacenar user_id en localStorage
-      console.log('Usuario Autenticado', data.user_id);
       localStorage.setItem('user_id', data.user_id);
-      console.log('Redirigiendo a /home');
       window.location.href = '/home'; // Redirigir a home.
     } else {
       alert(data.message || "Error al iniciar sesión");

@@ -25,6 +25,18 @@ header {
     margin-left: auto;
 }
 
+/* Account */
+.hidden {
+    display: none;
+}
+
+#logoutMessage {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: red;
+    cursor: pointer;
+}
+
 nav ul {
     list-style: none;
     display: flex;
@@ -180,3 +192,4 @@ footer {
     padding: 1rem;
     font-size: 0.875rem;
 }
+
