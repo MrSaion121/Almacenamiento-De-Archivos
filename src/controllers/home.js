@@ -1,4 +1,4 @@
-const awsService = requrire('../services/aws.services');
+const awsService = require('../services/aws.services');
 
 //Obtener los archivos almacenados en S3
 class HomeController {
