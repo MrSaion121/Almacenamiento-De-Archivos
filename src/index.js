@@ -38,7 +38,7 @@ async function verificarConexionDB() {
     }
 }
 
-// Llamar a la función antes de iniciar el servidor
+// Llamar a la función de Conexion de RDS antes de iniciar el servidor
 verificarConexionDB().then(() => {
     app.listen(port, () => {
         console.log(`🚀 API is running on port ${port}`);
