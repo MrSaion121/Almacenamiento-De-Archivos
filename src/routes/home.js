@@ -9,7 +9,7 @@ router.get('', (req, res) => {
 
 router.post('/uploads', upload.single('file'), async(req,res) => {
     //console.log(req.body.userId)
-    console.log('Archivo: ', req.body.file);
+    //console.log('Archivo: ', req.body.file);
     if(req.file){
         res.status(200).send('File uploaded succesfully')
     }else{

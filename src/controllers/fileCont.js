@@ -10,7 +10,9 @@ const listFiles = async (req, res) => {
     }
 
     s3.listObjects(params, function(err,data){
-        console.log(data.Contents);
+        if (data != null){
+            console.log(data.Contents);
+        }
     })
 
 }
