@@ -1,29 +1,26 @@
-/*
 function validateForm() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const password2 = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  // Validación de campos
   if (email.trim() === "") {
-    alert("Por favor ingresa tu nombre de usuario.");
+    alert("Por favor ingresa tu email.");
     return false;
   }
   if (password.trim() === "") {
     alert("Por favor ingresa tu contraseña.");
     return false;
   }
-  if (password.trim() === password2) {
-    alert("Las contraseñas no son identicas");
+  if (password !== confirmPassword) {
+    alert("Las contraseñas no son idénticas.");
     return false;
   }
 
-  createUser(email, password)
-  window.location.href = "";
-
-  return false;
+  // Llamada para crear usuario en la base de datos
+  createUser(email, password);
+  return false; // Evita que el formulario se recargue
 }
-
-function createUser() {}
-*/
 
 async function createUser(email, password) {
   try {
@@ -35,9 +32,9 @@ async function createUser(email, password) {
 
     if (response.ok) {
       const data = await response.json();
-      // Guardar ID del usuario en localStorage
-      localStorage.setItem('user_id', data.userId);
+      // Mostrar notificación
       alert(data.message);
+      // Redirigir a la página de login después del registro
       window.location.href = '/login';
     } else {
       const errorData = await response.json();
@@ -48,4 +45,3 @@ async function createUser(email, password) {
     alert('Error en la conexión con el servidor.');
   }
 }
-
