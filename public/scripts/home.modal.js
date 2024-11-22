@@ -23,14 +23,6 @@ function updateAccountButton() {
 function toggleLogoutMessage() {
     const logoutMessage = document.getElementById('logoutMessage');
     logoutMessage.classList.toggle('hidden');
-
-    // Ajustar posición en caso de desplazamiento dinámico
-    const accountButton = document.getElementById('accountButton');
-    if (!logoutMessage.classList.contains('hidden')) {
-        const rect = accountButton.getBoundingClientRect();
-        logoutMessage.style.top = `${rect.bottom + window.scrollY}px`;
-        logoutMessage.style.left = `${rect.left + window.scrollX}px`;
-    }
 }
 
 //Cerrar sesion del usuario
