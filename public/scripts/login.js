@@ -2,6 +2,8 @@
 console.log('JS cargado en HTML')
 
 async function validateForm() {
+  event.preventDefault();
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
