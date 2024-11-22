@@ -28,7 +28,6 @@ class LoginController {
             }
 
             //Si la password es correcta, devolver el user_id (email)
-            console.log('Respuesta del backend:', user[0].id_usuario);
             return res.status(200).json({ user_id: user[0].id_usuario})
 
         } catch (error) {
