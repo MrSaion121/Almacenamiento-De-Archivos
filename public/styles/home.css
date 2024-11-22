@@ -31,10 +31,29 @@ header {
 }
 
 #logoutMessage {
-    margin-top: 0.5rem;
-    font-size: 0.875rem;
+    position: absolute;
+    background-color: #fff;
     color: red;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    white-space: nowrap;
     cursor: pointer;
+    z-index: 10;
+}
+
+#logoutMessage:hover {
+    border: 1px solid red;
+}
+
+.account {
+    position: relative;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
 nav ul {

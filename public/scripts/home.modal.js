@@ -9,7 +9,7 @@ function updateAccountButton() {
     const accountButton = document.getElementById('accountButton');
     const logoutMessage = document.getElementById('logoutMessage');
 
-    if(userId) {
+    if (userId) {
         accountButton.innerHTML = '<i class="fa-solid fa-user"></i>';
         accountButton.onclick = () => toggleLogoutMessage();
         logoutMessage.onclick = () => logout();
@@ -23,6 +23,14 @@ function updateAccountButton() {
 function toggleLogoutMessage() {
     const logoutMessage = document.getElementById('logoutMessage');
     logoutMessage.classList.toggle('hidden');
+
+    // Ajustar posición en caso de desplazamiento dinámico
+    const accountButton = document.getElementById('accountButton');
+    if (!logoutMessage.classList.contains('hidden')) {
+        const rect = accountButton.getBoundingClientRect();
+        logoutMessage.style.top = `${rect.bottom + window.scrollY}px`;
+        logoutMessage.style.left = `${rect.left + window.scrollX}px`;
+    }
 }
 
 //Cerrar sesion del usuario
@@ -36,7 +44,7 @@ function updateUserName() {
     const userId = localStorage.getItem('user_id');
     const userNameElement = document.getElementById('userName');
 
-    if(userId) {
+    if (userId) {
         const userName = userId.split('@')[0];
         userNameElement.textContent = userName;
     } else {
@@ -89,18 +97,18 @@ function downloadFiles() {
     }
 }
 
-function uploadFile(){
+function uploadFile() {
     const file = document.getElementById('fileUpload')
     //console.log(file.files[0]);
     const formData = new FormData();
-    formData.append('file', file.files[0]); 
-    fetch(`/home/uploads`,{
+    formData.append('file', file.files[0]);
+    fetch(`/home/uploads`, {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Error:', error);
+        });
     closeModal('uploadModal');
 }
