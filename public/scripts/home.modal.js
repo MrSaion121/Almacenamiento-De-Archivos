@@ -94,7 +94,7 @@ function uploadFile() {
     const file = document.getElementById('fileUpload')
     const userId = localStorage.getItem('user_id');
     const formData = new FormData();
-    console.log(file);
+    console.log(file.files[0]);
     formData.append('userId', userId);
     formData.append('file', file.files[0]);
     fetch(`/home/uploads`, {
