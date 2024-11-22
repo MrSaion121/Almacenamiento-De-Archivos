@@ -33,7 +33,7 @@ label {
   color: #555;
 }
 
-input[type="text"] {
+input[type="text"],[type="password"] {
   width: 100%;
   padding: 0.8em;
   margin-bottom: 1em;

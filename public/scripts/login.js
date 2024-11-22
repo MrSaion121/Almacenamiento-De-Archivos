@@ -6,20 +6,13 @@ async function validateForm() {
   const password = document.getElementById("password").value;
 
   // Validación simple
-  if (email.trim() === "") {
-    alert("Por favor ingresa tu email.");
-    return false;
-  }
-  if (password.trim() === "") {
-    alert("Por favor ingresa tu contraseña.");
+  if (!email.trim() || !password.trim()) {
+    alert("Por favor ingresa todos los campos.");
     return false;
   }
 
   // Crear objeto de datos para el POST
-  const userData = {
-    email: email,
-    password: password
-  };
+  const userData = { email: email, password: password };
 
   try {
     const response = await fetch('/login', {
@@ -35,7 +28,9 @@ async function validateForm() {
     // Verificar si la autenticación fue exitosa
     if (response.status === 200) {
       // Almacenar user_id en localStorage
+      console.log('Usuario Autenticado', data.user_id);
       localStorage.setItem('user_id', data.user_id);
+      console.log('Redirigiendo a /home');
       window.location.href = '/home'; // Redirigir a home.
     } else {
       alert(data.message || "Error al iniciar sesión");
