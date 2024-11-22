@@ -1,8 +1,10 @@
-function validateForm() {
+async function validateForm() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+
+  // Validación simple
   if (email.trim() === "") {
-    alert("Por favor ingresa tu nombre de usuario.");
+    alert("Por favor ingresa tu email.");
     return false;
   }
   if (password.trim() === "") {
@@ -10,8 +12,35 @@ function validateForm() {
     return false;
   }
 
-  //sessionStorage.setItem("username", username);
+  // Crear objeto de datos para el POST
+  const userData = {
+    email: email,
+    password: password
+  };
 
-  window.location.href = "login";
-  return false;
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+
+    const data = await response.json();
+
+    // Verificar si la autenticación fue exitosa
+    if (response.status === 200) {
+      // Almacenar user_id en localStorage
+      localStorage.setItem('user_id', data.user_id);
+      window.location.href = '/home'; // Redirigir a home.
+    } else {
+      alert(data.message || "Error al iniciar sesión");
+    }
+  } catch (error) {
+    console.error("Error de red:", error);
+    alert("Hubo un problema con la conexión.");
+  }
+
+  return false; // Evitar el envío normal del formulario
 }
