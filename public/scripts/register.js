@@ -1,3 +1,6 @@
+//TEST
+console.log('JavaScript corriendo en Register.js');
+
 function validateForm() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
