@@ -4,6 +4,7 @@ dotenv.config();
 
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
 
+//test
 console.log({
     host: DB_HOST,
     user: DB_USER,
@@ -33,9 +34,9 @@ class UserModel {
 
     async createUser(id_usuario, password) {
         try {
-            const conn = await this.connect();
+            const pool = await this.connect();
             const query = `INSERT INTO usuarios (id_usuario, password) VALUES (?, ?)`;
-            const [result] = await conn.execute(query, [id_usuario, password]);
+            const [result] = await pool.execute(query, [id_usuario, password]);
             return result;
         } catch (error) {
             console.error('Error creating user:', error);
