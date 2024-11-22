@@ -15,11 +15,12 @@ console.log({
 
 class UserModel {
     constructor() {
-        this.connection = process.env.DB_HOST;
+        this.connection = null;
     }
 
     async connect() {
         if (!this.connection) {
+            // Creamos un pool de conexiones
             this.connection = await mysql.createPool({
                 host: DB_HOST,
                 user: DB_USER,
@@ -33,18 +34,14 @@ class UserModel {
     }
 
     async createUser(id_usuario, password) {
-        let conn;
         try {
             const pool = await this.connect();
-            conn = await pool.getConnection();
             const query = `INSERT INTO usuarios (id_usuario, password) VALUES (?, ?)`;
-            const [result] = await pool.execute(query, [id_usuario, password]);
+            const [result] = await pool.query(query, [id_usuario, password]);
             return result;
         } catch (error) {
             console.error('Error creating user:', error);
             throw new Error('Error al crear usuario');
-        } finally {
-            if (conn) conn.release();
         }
     }
 }
