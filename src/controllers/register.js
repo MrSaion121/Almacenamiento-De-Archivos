@@ -5,11 +5,17 @@ class RegisterController {
 
     async registerUser(req, res) {
         try {
-            const {email, password } = req.body;
+            const { email, password } = req.body;
 
             //Validar que ambos campos esten presentes
             if (!email || !password) {
-                return res.status(400).json({message: 'Email y contraseña son requeridos..'});
+                return res.status(400).json({ message: 'Email y contraseña son requeridos..' });
+            }
+
+            // Verificar si el email ya existe en la base de datos
+            const existingUser = await UserModel.findUserByEmail(email);
+            if (existingUser) {
+                return res.status(400).json({ message: 'El correo electrónico ya está registrado.' });
             }
 
             //Encriptar password
@@ -25,7 +31,7 @@ class RegisterController {
             });
         } catch (error) {
             console.error('Error en el registro', error);
-            res.status(500).json({message: 'Error interno del server'});
+            res.status(500).json({ message: 'Error interno del server' });
         }
     }
 }

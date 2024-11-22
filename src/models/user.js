@@ -1,17 +1,7 @@
 const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
 dotenv.config();
-
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT } = process.env;
-
-//test
-console.log({
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-    port: DB_PORT,
-});
 
 class UserModel {
     constructor() {
@@ -42,6 +32,16 @@ class UserModel {
         } catch (error) {
             console.error('Error creating user:', error);
             throw new Error('Error al crear usuario');
+        }
+    }
+
+    async findUserByEmail(email) {
+        try {
+            const query = 'SELECT * FROM users WHERE email = $1';
+            const result = await db.query(query, [email]);
+            return result.rows[0];
+        } catch (error) {
+            throw new Error('Error al verificar el email');
         }
     }
 }
