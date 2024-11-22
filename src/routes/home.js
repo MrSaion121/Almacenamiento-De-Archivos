@@ -1,14 +1,15 @@
 const router = require('express').Router();
 const path = require('path');
-const  upload  = require('../middlewares/s3')
+const  upload  = require('../middlewares/s3');
+const listFiles =  require('../controllers/fileCont');
 //GET | /home | home
 router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
-router.post('/uploads', upload.single('file'),(req,res) => {
-    console.log(req.body)
-    console.log('Archivo: ', req.file);
+router.post('/uploads', upload.single('file'), async(req,res) => {
+    //console.log(req.body.userId)
+    console.log('Archivo: ', req.body.file);
     if(req.file){
         res.status(200).send('File uploaded succesfully')
     }else{
@@ -16,8 +17,6 @@ router.post('/uploads', upload.single('file'),(req,res) => {
     }
 })
 
-function uploadFile(event){
-    
-}
+router.get('/uploads/:userId', listFiles);
 
 module.exports = router;

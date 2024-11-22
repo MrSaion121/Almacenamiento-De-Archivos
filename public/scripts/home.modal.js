@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    getFiles();
     updateAccountButton();
     updateUserName();
 });
@@ -91,16 +92,31 @@ function downloadFiles() {
 
 function uploadFile() {
     const file = document.getElementById('fileUpload')
-    //console.log(file.files[0]);
+    const userId = localStorage.getItem('user_id');
     const formData = new FormData();
+    formData.append('userId', userId);
     formData.append('file', file.files[0]);
     fetch(`/home/uploads`, {
         method: 'POST',
-        body: formData
+        body: formData,
     })
         .then(response => response.json())
         .catch(error => {
             console.error('Error:', error);
         });
     closeModal('uploadModal');
+}
+
+function getFiles(){
+    const userId = localStorage.getItem('user_id');
+    const formData = new FormData();
+    formData.append('userId', userId);
+
+    fetch(`/home/uploads/${userId}`, {
+        method: 'GET',
+    })
+        .then(response => response.json())
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
