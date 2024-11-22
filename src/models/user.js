@@ -34,16 +34,6 @@ class UserModel {
             throw new Error('Error al crear usuario');
         }
     }
-
-    async findUserByEmail(email) {
-        try {
-            const query = 'SELECT * FROM users WHERE email = $1';
-            const result = await db.query(query, [email]);
-            return result.rows[0];
-        } catch (error) {
-            throw new Error('Error al verificar el email');
-        }
-    }
 }
 
 module.exports = new UserModel();
