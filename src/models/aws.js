@@ -10,13 +10,8 @@ AWS.config.update({
     region: process.env.AWS_REGION,
 });
 
-const s3 = new AWS.S3(); 
+const s3 = new AWS.S3();
 
 const bucket = process.env.S3_BUCKET
 
-
-const db =  new AWS.DynamoDB.DocumentClient();
-
-const sqs  = new AWS.SQS();
-
-module.exports = { s3, bucket, db, sqs}
+module.exports = { s3, bucket}
