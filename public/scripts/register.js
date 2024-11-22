@@ -38,7 +38,7 @@ async function createUser(email, password) {
       // Guardar ID del usuario en localStorage
       localStorage.setItem('user_id', data.userId);
       alert(data.message);
-      window.location.href = '/home';
+      window.location.href = '/login';
     } else {
       const errorData = await response.json();
       alert(errorData.message || 'Error al registrarse.');
