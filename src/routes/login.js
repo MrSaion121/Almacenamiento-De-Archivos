@@ -11,4 +11,4 @@ router.get('', (req, res) => {
 //POST | /login
 router.post('', LoginController.loginUser);
 
-module.exports = router; 
+module.exports = router;
