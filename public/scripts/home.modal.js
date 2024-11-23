@@ -142,9 +142,11 @@ function uploadFile() {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.message) {
+            if (data.sucess) {
                 alert(data.message);
                 loadFiles();
+            } else {
+                alert(`error: ${data.message}`);
             }
         })
         .catch(error => {
