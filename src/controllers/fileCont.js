@@ -15,12 +15,15 @@ const uploadFileToDB = async (req, res, next) => {
 
         //REgistrar el archivo en la base de datos - RDS
         await FileModel.createFile(userId, fileName, fileUrl);
-        console.log('ARchivo registrado en la base de datos correctamente');
-        return res.status(201).json({ message: "Archivo subido y registrado con exito" });
-        //continuar con las siguientes funciones
+        console.log('Archivo registrado en la base de datos correctamente');
+
         next();
+        return res.status(201).json({ message: "Archivo subido y registrado con exito" });
+
+        //continuar con las siguientes funciones
     } catch (error) {
         console.error('Error al registrar el archivo:', error);
+        next(error)
         return res.status(500).json({ message: "Error al registrar el archivo" });
     }
 }
@@ -40,4 +43,4 @@ const listFiles = async (req, res) => {
 
 }
 
-module.exports = { listFiles, uploadFileToDB};
+module.exports = { listFiles, uploadFileToDB };
