@@ -23,6 +23,16 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
     }
 });
 
+//test
+router.get('/debug', (req, res) => {
+    res.json({
+        AWS_REGION: process.env.AWS_REGION,
+        SNS_TOPIC_ARN: process.env.SNS_TOPIC_ARN,
+        AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
+    });
+});
+
+
 router.get('/uploads/:userId', listFiles);
 
 module.exports = router;
