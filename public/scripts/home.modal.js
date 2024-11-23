@@ -118,6 +118,7 @@ function closeModal(modalId) {
 }
 
 // Función para manejar la carga de archivos (ejemplo básico)
+/*
 function uploadFile() {
     const fileInput = document.getElementById('fileUpload');
     const file = fileInput.files[0];
@@ -129,6 +130,7 @@ function uploadFile() {
         alert("Por favor selecciona un archivo para subir.");
     }
 }
+    */
 
 // Función para manejar la descarga de archivos (ejemplo básico)
 /*
@@ -160,7 +162,16 @@ function uploadFile() {
         method: 'POST',
         body: formData,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Error al subir el archivo')
+            }
+        })
+        .then(message => {
+            alert(message);
+        })
         .catch(error => {
             console.error('Error:', error);
             alert('Hubo un error al subir el archivo.');
