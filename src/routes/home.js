@@ -11,6 +11,10 @@ router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
+// POST | /uploads | Subida y registro de archivo
+router.post('/uploads', upload.single('file'), uploadFileToDB);
+
+/*
 router.post('/uploads', upload.single('file'), uploadFileToDB ,async (req, res) => {
 
     //console.log(req.body.userId)
@@ -23,6 +27,7 @@ router.post('/uploads', upload.single('file'), uploadFileToDB ,async (req, res) 
         res.status(400).send('Error uploading files');
     }
 });
+*/
 
 router.get('/uploads/:userId', listFiles);
 
