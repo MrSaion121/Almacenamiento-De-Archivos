@@ -10,7 +10,7 @@ router.get('', (req, res) => {
 });
 
 // POST | /uploads | Subida y registro de archivo
-router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) => {
+router.post('/uploads', upload.single('file'), async (req, res) => {
 
     //console.log(req.body.userId)
     console.log('Archivo: ', req.body.file);
@@ -21,15 +21,6 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
     } else {
         res.status(400).send('Error uploading files');
     }
-});
-
-//test
-router.get('/debug', (req, res) => {
-    res.json({
-        AWS_REGION: process.env.AWS_REGION,
-        SNS_TOPIC_ARN: process.env.SNS_TOPIC_ARN,
-        AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
-    });
 });
 
 
