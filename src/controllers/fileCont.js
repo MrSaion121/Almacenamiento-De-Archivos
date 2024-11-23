@@ -19,8 +19,6 @@ const uploadFileToDB = async (req, res, next) => {
 
         next();
         //return res.status(201).json({ message: "Archivo subido y registrado con exito" });
-
-        //continuar con las siguientes funciones
     } catch (error) {
         console.error('Error al registrar el archivo:', error);
         next(error)

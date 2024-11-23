@@ -10,7 +10,6 @@ router.get('', (req, res) => {
 });
 
 // POST | /uploads | Subida y registro de archivo
-
 router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) => {
 
     //console.log(req.body.userId)
