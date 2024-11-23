@@ -16,7 +16,7 @@ router.post('/uploads', upload.single('file'), async (req, res) => {
             return res.status(400).send('Error: no se encontro archivo para subir');
         }
         //RDS
-        const dbResult = await uploadFileToDB(req.file, req.body.userId);
+        const dbResult = await uploadFileToDB(req, res);
         console.log('Regustrio de DB completado:', dbResult);
 
         //Mandar notificacion (Correo)
