@@ -3,7 +3,7 @@ const path = require('path');
 const upload = require('../middlewares/s3');
 const listFiles = require('../controllers/fileCont');
 const awsService = require('../services/aws.service');
-const uploadFile = require('../controllers/fileCont');
+const uploadFileToDB = require('../controllers/fileCont');
 
 
 //GET | /home | home
@@ -11,7 +11,7 @@ router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
-router.post('/uploads', upload.single('file'), async (req, res) => {
+router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) => {
 
     //console.log(req.body.userId)
     console.log('Archivo: ', req.body.file);

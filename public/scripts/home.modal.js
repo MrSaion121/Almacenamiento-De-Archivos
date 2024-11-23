@@ -154,6 +154,12 @@ function uploadFile() {
     const file = document.getElementById('fileUpload');
     const userId = localStorage.getItem('user_id');
 
+    //Validar si esta logeado
+    if (!userId) {
+        alert('Inicia sesión para subir archivos.');
+        return;
+    }
+
     const formData = new FormData();
     formData.append('userId', userId);
     formData.append('file', file.files[0]);
