@@ -11,22 +11,7 @@ router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
-router.post('/uploads', upload.single('file'), async (req, res) => {
-
-    try {
-        const id_usuario = localStorage.getItem('user_id');
-        const file = req.file;
-
-        if (!id_usuario || !file) {
-            return res.status(400).json({ success: false, message: 'id_usuario o archivo no proporcionado' });
-        }
-
-        await uploadFile(req, res);
-
-    } catch (error) {
-        console.log('Error en la subida', error);
-        res.status(500).json({ success: false, message: 'Error interno al subir el archivo' });
-    }
+router.post('/uploads', upload.single('file'), uploadFile, async (req, res) => {
 
     //console.log(req.body.userId)
     console.log('Archivo: ', req.body.file);
