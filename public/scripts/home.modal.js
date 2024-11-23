@@ -163,15 +163,6 @@ function uploadFile() {
         body: formData,
     })
         .then(response => response.json())
-        //RDS
-        .then(data => {
-            if (data.success) {
-                alert('Archivo subido exitosamente');
-                loadFiles(); //Recargar lista de archivos
-            } else {
-                alert('Error al subir archivo' + data.message);
-            }
-        })
         .catch(error => {
             console.error('Error:', error);
             alert('Hubo un error al subir el archivo.');
