@@ -14,7 +14,7 @@ router.get('', (req, res) => {
 router.post('/uploads', upload.single('file'), async (req, res) => {
 
     try {
-        const id_usuario = req.body.id_usuario;
+        const id_usuario = localStorage.getItem('user_id');
         const file = req.file;
 
         if (!id_usuario || !file) {
