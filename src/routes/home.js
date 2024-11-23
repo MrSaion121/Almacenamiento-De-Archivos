@@ -11,11 +11,27 @@ router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
-router.post('/uploads', upload.single('file'), uploadFile, async (req, res) => {
+router.post('/uploads', upload.single('file'), async (req, res) => {
+
+    try {
+        const id_usuario = req.body.id_usuario;
+        const file = req.file;
+
+        if (!id_usuario || !file) {
+            return res.status(400).json({ success: false, message: 'id_usuario o archivo no proporcionado' });
+        }
+
+        await uploadFile(req, res);
+
+    } catch (error) {
+        console.log('Error en la subida', error);
+        res.status(500).json({ success: false, message: 'Error interno al subir el archivo' });
+    }
+
     //console.log(req.body.userId)
     console.log('Archivo: ', req.body.file);
     if (req.file) {
-        await awsService.sendNotification()
+        await awsService.sendNotification();
         res.status(200).send('File uploaded succesfully')
     } else {
         res.status(400).send('Error uploading files')
@@ -23,7 +39,5 @@ router.post('/uploads', upload.single('file'), uploadFile, async (req, res) => {
 })
 
 router.get('/uploads/:userId', listFiles);
-
-//router.post('/uploads', upload.single('file'), uploadFile);
 
 module.exports = router;

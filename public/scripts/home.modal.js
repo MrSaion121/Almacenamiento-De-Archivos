@@ -154,6 +154,15 @@ function uploadFile() {
     const file = document.getElementById('fileUpload');
     const userId = localStorage.getItem('user_id');
 
+    //validaciones rapidas
+    if (!fileInput.files[0]) {
+        return alert('Por favor selecciona un archivo para subir.');
+    }
+
+    if (!userId) {
+        return alert('Error: No se encontró user_id en el sistema.');
+    }
+
     const formData = new FormData();
     formData.append('userId', userId);
     formData.append('file', file.files[0]);

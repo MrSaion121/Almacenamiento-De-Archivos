@@ -39,6 +39,19 @@ class FileModel {
             throw new Error('Error al registrar archivo en la base de datos');
         }
     }
+
+    // Ejemplo de listar archivos por usuario (para verificar funcionalidad)
+    async getFilesByUser(id_usuario) {
+        try {
+            const pool = await this.connect();
+            const query = `SELECT * FROM archivos WHERE id_usuario = ?`;
+            const [rows] = await pool.query(query, [id_usuario]);
+            return rows;
+        } catch (error) {
+            console.error('Error fetching files for user:', error);
+            throw new Error('Error al obtener archivos del usuario');
+        }
+    }
 }
 
 module.exports = new FileModel();
