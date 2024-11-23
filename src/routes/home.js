@@ -1,28 +1,43 @@
 const router = require('express').Router();
 const path = require('path');
-const HomeController = require('../controllers/home')
+const upload = require('../middlewares/s3');
+const listFiles = require('../controllers/fileCont');
+const awsService = require('../services/aws.service');
+const uploadFile = require('../controllers/fileCont');
 
-const  upload  = require('../middlewares/s3')
+
 //GET | /home | home
 router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
+router.post('/uploads', upload.single('file'), async (req, res) => {
 
-router.post('/uploads', upload.single('file'),(req,res) => {
-    console.log(req.body)
-    console.log('Archivo: ', req.file);
-    if(req.file){
+    try {
+        const id_usuario = localStorage.getItem('user_id');
+        const file = req.file;
+
+        if (!id_usuario || !file) {
+            return res.status(400).json({ success: false, message: 'id_usuario o archivo no proporcionado' });
+        }
+
+        await uploadFile(req, res);
+
+    } catch (error) {
+        console.log('Error en la subida', error);
+        res.status(500).json({ success: false, message: 'Error interno al subir el archivo' });
+    }
+
+    //console.log(req.body.userId)
+    console.log('Archivo: ', req.body.file);
+    if (req.file) {
+        await awsService.sendNotification();
         res.status(200).send('File uploaded succesfully')
-    }else{
+    } else {
         res.status(400).send('Error uploading files')
     }
 })
 
-//GET | /home/files | Obtener archivos
-router.get('/files', HomeController.getFiles);
-
-//POST | /home/downloads | Descargar archivos seleccionados
-router.post('/download', HomeController.downloadFile);
+router.get('/uploads/:userId', listFiles);
 
 module.exports = router;

@@ -13,4 +13,7 @@ AWS.config.update({
 const s3 = new AWS.S3();
 const bucket = process.env.AWS_BUCKET_NAME;
 
-module.exports = { s3, bucket}
+const topic = process.env.SNS_TOPIC_ARN
+const sns  = new AWS.SNS();
+
+module.exports = { s3, bucket, topic, sns}
