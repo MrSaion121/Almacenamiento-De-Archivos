@@ -1,10 +1,8 @@
 const router = require('express').Router();
 const path = require('path');
 const upload = require('../middlewares/s3');
-const listFiles = require('../controllers/fileCont');
+const { listFiles, uploadFileToDB } = require('../controllers/fileCont');
 const awsService = require('../services/aws.service');
-const uploadFileToDB = require('../controllers/fileCont');
-
 
 //GET | /home | home
 router.get('', (req, res) => {
@@ -12,10 +10,12 @@ router.get('', (req, res) => {
 });
 
 // POST | /uploads | Subida y registro de archivo
+
 router.post('/uploads', upload.single('file'), uploadFileToDB);
 
+
 /*
-router.post('/uploads', upload.single('file'), uploadFileToDB ,async (req, res) => {
+router.post('/uploads', upload.single('file'), async (req, res) => {
 
     //console.log(req.body.userId)
     console.log('Archivo: ', req.body.file);

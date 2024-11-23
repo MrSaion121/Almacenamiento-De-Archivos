@@ -14,9 +14,10 @@ const uploadFileToDB = async (req, res) => {
 
         //REgistrar el archivo en la base de datos
         await FileModel.createFile(userId, fileName, fileUrl);
+
         return res.status(201).json({ message: "Archivo subido y registrado con exito" });
     } catch (error) {
-        console.error('Error al registrar el archivo:',error);
+        console.error('Error al registrar el archivo:', error);
         return res.status(500).json({ message: "Error al registrar el archivo" });
 
     }
@@ -37,4 +38,4 @@ const listFiles = async (req, res) => {
 
 }
 
-module.exports = listFiles, uploadFileToDB;
+module.exports = { listFiles, uploadFileToDB};

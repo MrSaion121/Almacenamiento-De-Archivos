@@ -160,6 +160,12 @@ function uploadFile() {
         return;
     }
 
+    //Validar si selecciono un archivo
+    if (!file.files[0]) {
+        alert('Por favor selecciona un archivo para subir.');
+        return;
+    }
+
     const formData = new FormData();
     formData.append('userId', userId);
     formData.append('file', file.files[0]);
@@ -168,15 +174,12 @@ function uploadFile() {
         method: 'POST',
         body: formData,
     })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('Error al subir el archivo')
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                loadFiles();
             }
-        })
-        .then(message => {
-            alert(message);
         })
         .catch(error => {
             console.error('Error:', error);
