@@ -1,28 +1,24 @@
 const router = require('express').Router();
 const path = require('path');
-const HomeController = require('../controllers/home')
-
-const  upload  = require('../middlewares/s3')
+const  upload  = require('../middlewares/s3');
+const listFiles =  require('../controllers/fileCont');
+const awsService = require('../services/aws.service');
 //GET | /home | home
 router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
-
-router.post('/uploads', upload.single('file'),(req,res) => {
-    console.log(req.body)
-    console.log('Archivo: ', req.file);
+router.post('/uploads', upload.single('file'), async(req,res) => {
+    //console.log(req.body.userId)
+    console.log('Archivo: ', req.body.file);
     if(req.file){
+        await awsService.sendNotification()
         res.status(200).send('File uploaded succesfully')
     }else{
         res.status(400).send('Error uploading files')
     }
 })
 
-//GET | /home/files | Obtener archivos
-router.get('/files', HomeController.getFiles);
-
-//POST | /home/downloads | Descargar archivos seleccionados
-router.post('/download', HomeController.downloadFile);
+router.get('/uploads/:userId', listFiles);
 
 module.exports = router;
