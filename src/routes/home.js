@@ -11,6 +11,26 @@ router.get('', (req, res) => {
 
 // POST | /uploads | Subida y registro de archivo
 router.post('/uploads', upload.single('file'), async (req, res) => {
+    try {
+        if(!req.file) {
+            return res.status(400).send('Error: no se encontro archivo para subir');
+        }
+        //RDS
+        const dbResult = await uploadFileToDB(req.file, req.body.userId);
+        console.log('Regustrio de DB completado:', dbResult);
+
+        //Mandar notificacion (Correo)
+        await awsService.sendNotification();
+        console.log('Notificacion enviada con exito:');
+        res.status(200).send('Archivo subido y procesado con exito');
+    } catch (error) {
+        console.error('Error al procesar la subida:', error);
+        res.status(500).send('Error Interno del servidor');
+    }
+});
+
+/*
+router.post('/uploads', upload.single('file'), async (req, res) => {
 
     //console.log(req.body.userId)
     console.log('Archivo: ', req.body.file);
@@ -22,7 +42,7 @@ router.post('/uploads', upload.single('file'), async (req, res) => {
         res.status(400).send('Error uploading files');
     }
 });
-
+*/
 
 router.get('/uploads/:userId', listFiles);
 
