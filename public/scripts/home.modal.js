@@ -118,6 +118,7 @@ function closeModal(modalId) {
 }
 
 // Función para manejar la carga de archivos (ejemplo básico)
+/*
 function uploadFile() {
     const fileInput = document.getElementById('fileUpload');
     const file = fileInput.files[0];
@@ -129,6 +130,7 @@ function uploadFile() {
         alert("Por favor selecciona un archivo para subir.");
     }
 }
+*/
 
 // Función para manejar la descarga de archivos (ejemplo básico)
 /*
@@ -148,23 +150,38 @@ function downloadFiles() {
 */
 
 function uploadFile() {
-    const file = document.getElementById('fileUpload')
+
+    const file = document.getElementById('fileUpload');
     const userId = localStorage.getItem('user_id');
+
     const formData = new FormData();
     formData.append('userId', userId);
     formData.append('file', file.files[0]);
+
     fetch(`/home/uploads`, {
         method: 'POST',
         body: formData,
     })
         .then(response => response.json())
+        //RDS
+        .then(data => {
+            if (data.success) {
+                alert('Archivo subido exitosamente');
+                loadFiles(); //Recargar lista de archivos
+            } else {
+                alert('Error al subir archivo' + data.message);
+            }
+        })
         .catch(error => {
             console.error('Error:', error);
+            alert('Hubo un error al subir el archivo.');
         });
+
     closeModal('uploadModal');
+
 }
 
-function getFiles(){
+function getFiles() {
     const userId = localStorage.getItem('user_id');
     const formData = new FormData();
     formData.append('userId', userId);
