@@ -11,9 +11,6 @@ router.get('', (req, res) => {
 });
 
 // POST | /uploads | Subida y registro de archivo
-
-//router.post('/uploads', upload.single('file'),uploadFileToDB );
-
 router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) => {
 
     //console.log(req.body.userId)
@@ -27,6 +24,6 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
     }
 });
 
-router.get('/uploads/:userId', listFiles, getFilesByUser);
+router.get('/uploads/:userId', listFiles);
 
 module.exports = router;
