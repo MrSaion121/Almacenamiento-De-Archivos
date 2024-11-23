@@ -3,6 +3,7 @@ const path = require('path');
 const upload = require('../middlewares/s3');
 const { listFiles, uploadFileToDB } = require('../controllers/fileCont');
 const awsService = require('../services/aws.service');
+const { getFilesByUser } = require('../models/file');
 
 //GET | /home | home
 router.get('', (req, res) => {
@@ -19,13 +20,13 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
     console.log('Archivo: ', req.body.file);
     if (req.file) {
         //Mandar notificacion (Correo)
-        //await awsService.sendNotification();
+        await awsService.sendNotification();
         res.status(200).send('File uploaded succesfully');
     } else {
         res.status(400).send('Error uploading files');
     }
 });
 
-router.get('/uploads/:userId', listFiles);
+router.get('/uploads/:userId', listFiles, getFilesByUser);
 
 module.exports = router;
