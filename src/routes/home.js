@@ -32,7 +32,7 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
         }
     } catch (error) {
         console.error('Error al procesar la subida:', error);
-        res.status(500).json({ sucess: false, message: 'Error interno del server' });
+        res.status(500).json({ success: false, message: 'Error interno del server' });
     }
 });
 
