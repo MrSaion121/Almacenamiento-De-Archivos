@@ -118,7 +118,6 @@ function closeModal(modalId) {
 }
 
 // Función para manejar la carga de archivos (ejemplo básico)
-/*
 function uploadFile() {
     const fileInput = document.getElementById('fileUpload');
     const file = fileInput.files[0];
@@ -130,7 +129,6 @@ function uploadFile() {
         alert("Por favor selecciona un archivo para subir.");
     }
 }
-*/
 
 // Función para manejar la descarga de archivos (ejemplo básico)
 /*
