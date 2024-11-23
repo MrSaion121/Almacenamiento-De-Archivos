@@ -1,6 +1,7 @@
 const { topic, sns } = require("../models/aws");
 
 class AwsService {
+    /*
     sendNotification = async () => {
         const message = `
         Se ha subido su archivo con exito.`
@@ -13,6 +14,7 @@ class AwsService {
 
         await sns.publish(params).promise();
     }
+        */
 }
 
 module.exports = new AwsService();

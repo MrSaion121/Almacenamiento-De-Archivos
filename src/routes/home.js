@@ -31,7 +31,8 @@ router.post('/uploads', upload.single('file'), async (req, res) => {
     //console.log(req.body.userId)
     console.log('Archivo: ', req.body.file);
     if (req.file) {
-        await awsService.sendNotification();
+        //Mandar notificacion (Correo)
+        //await awsService.sendNotification();
         res.status(200).send('File uploaded succesfully')
     } else {
         res.status(400).send('Error uploading files')
