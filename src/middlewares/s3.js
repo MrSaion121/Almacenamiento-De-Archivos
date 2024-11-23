@@ -44,9 +44,6 @@ var upload = multer({
     s3: s3,
     bucket: process.env.AWS_BUCKET_NAME,
     key: (req, file, cb) => {
-
-      const userId = req.body.userId;
-      
       createFolderIfNotExist(`${process.env.AWS_BUCKET_NAME}`, `${req.body.userId}/`)
       const extension = file.originalname.split('.').pop();
       const filename = `${req.body.userId}/${uuidv4()}.${extension}`;
