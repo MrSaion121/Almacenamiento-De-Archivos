@@ -3,7 +3,6 @@ const path = require('path');
 const upload = require('../middlewares/s3');
 const { listFiles, uploadFileToDB } = require('../controllers/fileCont');
 const awsService = require('../services/aws.service');
-const { getFilesByUser } = require('../models/file');
 
 //GET | /home | home
 router.get('', (req, res) => {
