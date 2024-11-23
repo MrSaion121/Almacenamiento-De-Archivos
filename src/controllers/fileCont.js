@@ -2,7 +2,7 @@ const { s3 } = require("../models/aws");
 const FileModel = require('../models/file');
 
 //Registrar el archivo subido - RDS
-const uploadFileToDB = async (req, res) => {
+const uploadFileToDB = async (req, res, next) => {
     try {
         const { userId } = req.body;
         const fileName = req.file.originalname;
@@ -15,12 +15,13 @@ const uploadFileToDB = async (req, res) => {
 
         //REgistrar el archivo en la base de datos - RDS
         await FileModel.createFile(userId, fileName, fileUrl);
-
+        console.log('ARchivo registrado en la base de datos correctamente');
         return res.status(201).json({ message: "Archivo subido y registrado con exito" });
+        //continuar con las siguientes funciones
+        next();
     } catch (error) {
         console.error('Error al registrar el archivo:', error);
         return res.status(500).json({ message: "Error al registrar el archivo" });
-
     }
 }
 
