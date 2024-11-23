@@ -10,8 +10,10 @@ AWS.config.update({
     region: process.env.AWS_REGION,
 });
 
-const s3 = new AWS.S3();
-
+const s3 = new AWS.S3(); 
 const bucket = process.env.S3_BUCKET
 
-module.exports = { s3, bucket}
+const topic = process.env.SNS_TOPIC_ARN
+const sns  = new AWS.SNS();
+
+module.exports = { s3, bucket, topic, sns}
