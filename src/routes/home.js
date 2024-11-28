@@ -9,8 +9,10 @@ router.get('', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'home.html'));
 });
 
-// POST | /uploads | Subida y registro de archivo
+//GET | /home/files | Obtener los archivos base al usuario que fue registrado
+router.get('/files', listFiles);
 
+// POST | /uploads | Subida y registro de archivo
 router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) => {
     try {
         //console.log(req.body.userId)

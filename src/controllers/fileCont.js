@@ -26,6 +26,28 @@ const uploadFileToDB = async (req, res, next) => {
     }
 }
 
+
+const listFiles = async (req, res) => {
+    const { userId } = req.params;
+    const params = {
+        Bucket: `${process.env.AWS_BUCKET}`,
+        Prefix: `${userId}/`
+    }
+    try {
+        const data = await s3.listObjects(params).promise();
+        const files = data.Contents.map(file => ({
+            Key: file.Key,
+            Size: file.Size,
+            LastModified: file.LastModified
+        }));
+        res.status(200).json(files);
+    }catch (error) {
+        console.error('Error Descargando los archivos desde S3', error);
+        res.status(500).json({ message: "Error al descargar los archivos" });
+    }
+}
+
+/*
 const listFiles = async (req, res) => {
     //console.log(req.body.userId)
     const { userId } = req.params
@@ -40,5 +62,6 @@ const listFiles = async (req, res) => {
     })
 
 }
+*/
 
 module.exports = { listFiles, uploadFileToDB };
