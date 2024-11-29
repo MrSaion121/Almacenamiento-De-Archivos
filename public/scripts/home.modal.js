@@ -90,7 +90,7 @@ async function downloadFiles() {
         if (response.ok) {
             const downloadUrls = await response.json();
             console.log(downloadUrls)
-            const downloadLinks = downloadUrls.forEach(url => {
+            const downloadLinks = downloadUrls.files.forEach(url => {
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = ''; // Asignar el nombre del archivo si es necesario
