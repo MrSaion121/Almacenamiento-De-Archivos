@@ -163,12 +163,16 @@ async function getFiles() {
     
     try {
         const response = await fetch(`/home/uploads/${userId}`);
+        //Validacion
+        if (!response.ok) {
+            throw new Error('Error al obtener archivos.');
+        }
         const files = await response.json();
 
         const fileListContainer = document.getElementById('fileListContainer');
         fileListContainer.innerHTML = '';
 
-        file.forEach(file => {
+        files.forEach(file => {
             const fileElement = document.createElement('div');
             fileElement.innerHTML = `
                 <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
