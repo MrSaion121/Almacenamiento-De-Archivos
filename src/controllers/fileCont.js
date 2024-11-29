@@ -1,5 +1,6 @@
 const { s3 } = require("../models/aws");
 const FileModel = require('../models/file');
+const generateDownloadUrls = require('../services/download.service')
 
 //Registrar el archivo subido - RDS
 const uploadFileToDB = async (req, res, next) => {
@@ -63,5 +64,16 @@ const listFiles = async (req, res) => {
 
 }
 */
+
+const downloadFiles = async (req, res) => {
+    const { files, userId } = req.body
+    
+    try {
+        const downloadUrls = await generateDownloadUrls(userId, files);
+        res.status(200).json({ message: 'Archivos descargados exitosamente.', files: downloadedFiles });
+    } catch (error) {
+        res.status(500).json({ message: 'Error descargando archivos.', error: error.message });
+    }
+}
 
 module.exports = { listFiles, uploadFileToDB };

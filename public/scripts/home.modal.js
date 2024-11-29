@@ -73,7 +73,7 @@ async function loadFiles() {
 async function downloadFiles() {
     const selectedFiles = Array.from(document.querySelectorAll(".file-list-item input[type='checkbox']:checked"))
         .map(input => input.value); // Obtener las claves de los archivos seleccionados
-
+    console.log(selectedFiles)
     if (selectedFiles.length > 0) {
         const response = await fetch('/home/download', {
             method: 'POST',
@@ -85,13 +85,16 @@ async function downloadFiles() {
 
         if (response.ok) {
             const downloadUrls = await response.json();
-            downloadUrls.forEach(url => {
+            const downloadLinks = downloadUrls.forEach(url => {
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = ''; // Asignar el nombre del archivo si es necesario
                 a.click();
             });
-            closeModal('downloadModal');
+            const downloadList = document.getElementById('download-list')
+            downloadList.innerHTML = downloadLinks
+            openModal('downloadModal');
+
         } else {
             alert('Hubo un error al obtener los archivos para descargar.');
         }
