@@ -74,15 +74,15 @@ const downloadFiles = async (req, res) => {
 
         //Formato de zip
         const now = Date();
-        const timestamp = now.toLocaleString('en-US', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-        }).replace(/,/g, '-').replace(/:/g, '-').replace(/ /g, '');
 
+        //Formato fecha
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+        const timestamp = `${day}${month}${year}-${hours}-${minutes}`;
         const zipFileName = `files-${timestamp}.zip`;
 
         //Descarga de archivo
