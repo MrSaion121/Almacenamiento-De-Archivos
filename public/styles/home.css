@@ -125,8 +125,8 @@ h1 {
     border-bottom: 1px solid #eee;
 }
 
-.file-list-item .trash{
-    color: red;
+span.icono {
+    color:red;
     cursor: pointer;
 }
 
