@@ -158,15 +158,17 @@ function uploadFile() {
 
 }
 
+//Mostrar/Obtener los archivos en front
 async function getFiles() {
     const userId = localStorage.getItem('user_id');
-    
+
     try {
         const response = await fetch(`/home/uploads/${userId}`);
         //Validacion
         if (!response.ok) {
             throw new Error('Error al obtener archivos.');
         }
+        //Esperar los datos
         const files = await response.json();
 
         const fileListContainer = document.getElementById('fileListContainer');
@@ -174,6 +176,7 @@ async function getFiles() {
 
         files.forEach(file => {
             const fileElement = document.createElement('div');
+            fileElement.classList.add('file-list-item');
             fileElement.innerHTML = `
                 <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
                 <label for="file-${file.Key}">${file.Key}</label>
