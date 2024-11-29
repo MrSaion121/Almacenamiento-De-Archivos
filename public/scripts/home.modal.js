@@ -48,7 +48,8 @@ function updateUserName() {
 
 //Funcion para obtener/mostrar los archivos desde el server
 async function loadFiles() {
-    const response = await fetch('/home/files');
+    const userId = localStorage.getItem('user_id');
+    const response = await fetch(`/home/uploads${userId}`);
     const files = await response.json();
 
     const fileListContainer = document.getElementById('fileListContainer');
