@@ -15,7 +15,8 @@
             <ul>
                 <li><button onclick="window.location.href='/home'">Home</button></li>
                 <li><button onclick="openModal('uploadModal')">Subir</button></li>
-                <li><button onclick="openModal('downloadModal')">Descargar</button></li>
+                <!--<li><button onclick="openModal('downloadModal')">Descargar</button></li>-->
+                <li><button onclick="downloadFiles()">Descargar</button></li>
                 <li class="account">
                     <button id="accountButton" onclick="handleAccountAction()"></button>
                     <div id="logoutMessage" class="hidden">Cerrar sesion</div>
@@ -41,7 +42,7 @@
             <!-- Aqui se debera de mostrar el contenid -->
             <div id="fileListContainer">
             </div>
-            <button onclick="downloadFiles()">Descargar</button>
+            <!-- <button onclick="downloadFiles()">Descargar</button> -->
         </section>
     </main>
 
@@ -73,7 +74,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>Copyright by ....</p>
+        <p>Copyright by &#169 TiesOnDrive</p>
     </footer>
     <script src="/scripts/home.modal.js"></script>
     <script src="https://kit.fontawesome.com/79b3d7b09d.js" crossorigin="anonymous"></script>
