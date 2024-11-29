@@ -73,7 +73,7 @@ const downloadFiles = async (req, res) => {
     try {
 
         //Formato de zip
-        const now = Date();
+        const now = new Date();
 
         //Formato fecha
         const day = String(now.getDate()).padStart(2, '0');
