@@ -7,6 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let fileToDelete = null; //Definir variable global para almacenar archivo selecciondo
 
+//default
+let sortCriteria = {
+    field: "LastModified",
+    order: "asc"
+};
+
+// Cambiar el criterio de ordenamiento
+function changeSortCriteria(field) {
+    if (sortCriteria.field === field) {
+        // Cambiar solo la dirección del orden
+        sortCriteria.order = sortCriteria.order === "asc" ? "desc" : "asc";
+    } else {
+        // Cambiar el criterio y mantener ascendente por defecto
+        sortCriteria.field = field;
+        sortCriteria.order = "asc";
+    }
+
+    loadFiles();
+}
+
+//evento para que cambien de orden
+document.getElementById('sortFileDate').addEventListener('click', () => changeSortCriteria('LastModified'));
+document.getElementById('sortFileSize').addEventListener('click', () => changeSortCriteria('Size'));
+document.getElementById('sortFileName').addEventListener('click', () => changeSortCriteria('Key'));
+
+
 //Actualizar el boton de cuenta base al estado del user_id
 function updateAccountButton() {
     const userId = localStorage.getItem('user_id');
@@ -53,6 +79,27 @@ async function loadFiles() {
     const userId = localStorage.getItem('user_id');
     const response = await fetch(`/home/uploads/${userId}`);
     const files = await response.json();
+
+    //Ordenamiento
+    files.sort((a, b) => {
+        const aValue = a[sortCriteria.field];
+        const bValue = b[sortCriteria.field];
+
+        if (sortCriteria.field === 'LastModified') {
+            // Para fechas, ordenamos como números
+            return sortCriteria.order === "asc"
+                ? new Date(aValue) - new Date(bValue)
+                : new Date(bValue) - new Date(aValue);
+        } else if (sortCriteria.field === 'Size') {
+            // Para tamaños de archivo, ordenamos de menor a mayor o viceversa
+            return sortCriteria.order === "asc" ? aValue - bValue : bValue - aValue;
+        } else if (sortCriteria.field === 'Key') {
+            // Para los nombres de archivo, ordenamos alfabéticamente
+            return sortCriteria.order === "asc"
+                ? aValue.localeCompare(bValue)
+                : bValue.localeCompare(aValue);
+        }
+    });
 
     const fileListContainer = document.getElementById('fileListContainer');
     fileListContainer.innerHTML = ''; // Limpiar el contenedor
@@ -117,42 +164,6 @@ async function downloadFiles() {
         alert("Selecciona al menos un archivo para descargar.");
     }
 }
-
-/*
-//Funcion para descargar Archivos descargados.
-async function downloadFiles() {
-    const userId = localStorage.getItem('user_id');
-    const selectedFiles = Array.from(document.querySelectorAll(".file-list-item input[type='checkbox']:checked"))
-        .map(input => input.value); // Obtener las claves de los archivos seleccionados
-    console.log(selectedFiles)
-    if (selectedFiles.length > 0) {
-        const response = await fetch('/home/download', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ files: selectedFiles, userId })
-        });
-
-        if (response.ok) {
-            const downloadUrls = await response.json();
-            console.log(downloadUrls)
-            downloadUrls.files.forEach(url => {
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = ''; // Asignar el nombre del archivo si es necesario
-                a.click();
-            });
-            openModal('downloadModal');
-
-        } else {
-            alert('Hubo un error al obtener los archivos para descargar.');
-        }
-    } else {
-        alert("Selecciona al menos un archivo para descargar.");
-    }
-}
-*/
 
 // Función para abrir el modal
 function openModal(modalId) {
@@ -247,55 +258,3 @@ async function deleteFile() {
 }
 
 document.getElementById('confirmDeleteButton').onclick = deleteFile;
-
-// //Mostrar/Obtener los archivos en front
-// async function getFiles() {
-//     const userId = localStorage.getItem('user_id');
-
-//     try {
-//         const response = await fetch(`/home/uploads/${userId}`);
-//         //Validacion
-//         if (!response.ok) {
-//             throw new Error('Error al obtener archivos.');
-//         }
-//         //Esperar los datos
-//         const files = await response.json();
-
-//         const fileListContainer = document.getElementById('fileListContainer');
-//         fileListContainer.innerHTML = '';
-
-//         files.forEach(file => {
-//             const fileElement = document.createElement('div');
-//             fileElement.classList.add('file-list-item');
-//             fileElement.innerHTML = `
-//                 <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
-//                 <label for="file-${file.Key}">${file.Key}</label>
-//                 <span>${(file.Size / 1024).toFixed(2)} KB</span>
-//                 <span>${new Date(file.LastModified).toLocaleDateString()}</span>
-//             `;
-//             fileListContainer.appendChild(fileElement);
-//         });
-//     } catch(error){
-//         console.error('Error Loading files:', error);
-//     }
-// }
-
-// document.addEventListener('DOMContentLoaded', getFiles);
-
-
-
-/*
-function getFiles() {
-    const userId = localStorage.getItem('user_id');
-    const formData = new FormData();
-    formData.append('userId', userId);
-
-    fetch(`/home/uploads/${userId}`, {
-        method: 'GET',
-    })
-        .then(response => response.json())
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-*/

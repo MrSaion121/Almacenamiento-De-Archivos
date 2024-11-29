@@ -36,21 +36,6 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
     }
 });
 
-
-/*
-router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) => {
-
-    //console.log(req.body.userId)
-    console.log('Archivo: ', req.body.file);
-    if (req.file) {
-        //Mandar notificacion (Correo)
-        await awsService.sendNotification();
-        res.status(200).send('File uploaded succesfully');
-    } else {
-        res.status(400).send('Error uploading files');
-    }
-});
-*/
 router.get('/uploads/:userId', listFiles);
 
 router.post('/download', downloadFiles);

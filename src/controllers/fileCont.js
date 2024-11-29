@@ -50,23 +50,6 @@ const listFiles = async (req, res) => {
     }
 };
 
-/*
-const listFiles = async (req, res) => {
-    //console.log(req.body.userId)
-    const { userId } = req.params
-    //console.log(userId);
-    var params = {
-        Bucket: `${process.env.AWS_BUCKET_NAME}`,
-        Prefix: `${userId}/`
-    }
-
-    s3.listObjects(params, function (err, data) {
-        console.log(data.Contents);
-    })
-
-}
-*/
-
 const downloadFiles = async (req, res) => {
     const { files, userId } = req.body
 
@@ -139,19 +122,5 @@ const deleteFile = async (req, res) => {
         res.status(500).json({ message: 'Error al eliminar el archivo', error: error.message});
     }
 }
-
-
-/*
-const downloadFiles = async (req, res) => {
-    const { files, userId } = req.body
-    
-    try {
-        const downloadUrls = await generateDownloadUrls(userId, files);
-        res.status(200).json({ message: 'Archivos descargados exitosamente.', files: downloadUrls });
-    } catch (error) {
-        res.status(500).json({ message: 'Error descargando archivos.', error: error.message });
-    }
-}
-*/
 
 module.exports = { listFiles, uploadFileToDB, downloadFiles, deleteFile };
