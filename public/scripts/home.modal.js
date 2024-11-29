@@ -90,14 +90,12 @@ async function downloadFiles() {
         if (response.ok) {
             const downloadUrls = await response.json();
             console.log(downloadUrls)
-            const downloadLinks = downloadUrls.files.forEach(url => {
+            downloadUrls.files.forEach(url => {
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = ''; // Asignar el nombre del archivo si es necesario
                 a.click();
             });
-            const downloadList = document.getElementById('download-list')
-            downloadList.innerHTML = downloadLinks
             openModal('downloadModal');
 
         } else {
