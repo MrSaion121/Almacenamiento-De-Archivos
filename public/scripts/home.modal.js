@@ -58,6 +58,7 @@ async function loadFiles() {
     //DOM
     files.slice(1).forEach(file => {
         console.log(file.Key)
+        
         const fileName = file.Key.replace(userId + '/', "")
         const fileElement = document.createElement('div');
         fileElement.classList.add('file-list-item');
@@ -165,37 +166,37 @@ function uploadFile() {
 
 }
 
-//Mostrar/Obtener los archivos en front
-async function getFiles() {
-    const userId = localStorage.getItem('user_id');
+// //Mostrar/Obtener los archivos en front
+// async function getFiles() {
+//     const userId = localStorage.getItem('user_id');
 
-    try {
-        const response = await fetch(`/home/uploads/${userId}`);
-        //Validacion
-        if (!response.ok) {
-            throw new Error('Error al obtener archivos.');
-        }
-        //Esperar los datos
-        const files = await response.json();
+//     try {
+//         const response = await fetch(`/home/uploads/${userId}`);
+//         //Validacion
+//         if (!response.ok) {
+//             throw new Error('Error al obtener archivos.');
+//         }
+//         //Esperar los datos
+//         const files = await response.json();
 
-        const fileListContainer = document.getElementById('fileListContainer');
-        fileListContainer.innerHTML = '';
+//         const fileListContainer = document.getElementById('fileListContainer');
+//         fileListContainer.innerHTML = '';
 
-        files.forEach(file => {
-            const fileElement = document.createElement('div');
-            fileElement.classList.add('file-list-item');
-            fileElement.innerHTML = `
-                <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
-                <label for="file-${file.Key}">${file.Key}</label>
-                <span>${(file.Size / 1024).toFixed(2)} KB</span>
-                <span>${new Date(file.LastModified).toLocaleDateString()}</span>
-            `;
-            fileListContainer.appendChild(fileElement);
-        });
-    } catch(error){
-        console.error('Error Loading files:', error);
-    }
-}
+//         files.forEach(file => {
+//             const fileElement = document.createElement('div');
+//             fileElement.classList.add('file-list-item');
+//             fileElement.innerHTML = `
+//                 <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
+//                 <label for="file-${file.Key}">${file.Key}</label>
+//                 <span>${(file.Size / 1024).toFixed(2)} KB</span>
+//                 <span>${new Date(file.LastModified).toLocaleDateString()}</span>
+//             `;
+//             fileListContainer.appendChild(fileElement);
+//         });
+//     } catch(error){
+//         console.error('Error Loading files:', error);
+//     }
+// }
 
 document.addEventListener('DOMContentLoaded', getFiles);
 
