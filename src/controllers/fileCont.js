@@ -74,7 +74,7 @@ const downloadFiles = async (req, res) => {
 
         //Formato de zip
         const now = Date();
-        const timestamp = now.toLocalString('en-US', {
+        const timestamp = now.toLocaleString('en-US', {
             day: '2-digit',
             month: '2-digit',
             year: 'numeric',
