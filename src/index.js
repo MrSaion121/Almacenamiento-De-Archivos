@@ -24,7 +24,7 @@ app.use('/', express.static(path.join(__dirname, '..', 'public')))
 app.use('/', routes);
 
 app.get('', (req, res) => {
-    res.send("!Hola! Bienvenido a TiesOnDrive")
+    res.send("!Hola! Api funcionando - Bienvenido a TiesOnDrive")
 })
 
 app.listen(port, () => {
