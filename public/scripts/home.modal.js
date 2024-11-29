@@ -56,13 +56,14 @@ async function loadFiles() {
     fileListContainer.innerHTML = ''; // Limpiar el contenedor
 
     //DOM
-    files.forEach(file => {
+    files.slice(1).forEach(file => {
         console.log(file.Key)
+        const fileName = file.Key.replace(userId + '/', "")
         const fileElement = document.createElement('div');
         fileElement.classList.add('file-list-item');
         fileElement.innerHTML = `
-            <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
-            <label for="file-${file.Key}">${file.Key}</label>
+            <input type="checkbox" value="${fileName}" id="file-${fileName}">
+            <label for="file-${fileName}">${fileName}</label>
             <span>${(file.Size / 1024).toFixed(2)} KB</span>
             <span>${new Date(file.LastModified).toLocaleDateString()}</span>
         `;
