@@ -118,6 +118,28 @@ const downloadFiles = async (req, res) => {
     }
 }
 
+//Elimianr archivo
+const deleteFile = async (req, res) => {
+    const { fileName, userId } = req.body;
+
+    if(!fileName || !userId){
+        return res.status(400).json({ message: 'Falta información para eliminar archivo.' });
+    }
+
+    const params = {
+        Bucket: bucket,
+        Key: `${userId}/${fileName}`,
+    };
+
+    try {
+        await s3.deleteObject(params).promise();
+        return res.json({ message: 'Archivo eliminado correctamente.' });
+    } catch (error) {
+        console.error('Error al eliminar el archivo:', error);
+        res.status(500).json({ message: 'Error al eliminar el archivo', error: error.message});
+    }
+}
+
 
 /*
 const downloadFiles = async (req, res) => {
@@ -132,4 +154,4 @@ const downloadFiles = async (req, res) => {
 }
 */
 
-module.exports = { listFiles, uploadFileToDB, downloadFiles };
+module.exports = { listFiles, uploadFileToDB, downloadFiles, deleteFile };

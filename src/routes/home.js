@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
 const upload = require('../middlewares/s3');
-const { listFiles, uploadFileToDB, downloadFiles } = require('../controllers/fileCont');
+const { listFiles, uploadFileToDB, downloadFiles, deleteFile } = require('../controllers/fileCont');
 const awsService = require('../services/aws.service');
 
 //GET | /home | home
@@ -53,6 +53,8 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
 */
 router.get('/uploads/:userId', listFiles);
 
-router.post('/download', downloadFiles)
+router.post('/download', downloadFiles);
+
+router.post('/delete', deleteFile);
 
 module.exports = router;

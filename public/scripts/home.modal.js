@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFiles(); //Carga de archivos al iniciar
 });
 
+let fileToDelete = null; //Definir variable global para almacenar archivo selecciondo
+
 //Actualizar el boton de cuenta base al estado del user_id
 function updateAccountButton() {
     const userId = localStorage.getItem('user_id');
@@ -58,7 +60,7 @@ async function loadFiles() {
     //DOM
     files.slice(1).forEach(file => {
         console.log(file.Key)
-        
+
         const fileName = file.Key.replace(userId + '/', "")
         const fileElement = document.createElement('div');
         fileElement.classList.add('file-list-item');
@@ -67,7 +69,7 @@ async function loadFiles() {
             <label for="file-${fileName}">${fileName}</label>
             <span>${(file.Size / 1024).toFixed(2)} KB</span>
             <span>${new Date(file.LastModified).toLocaleDateString()}</span>
-            <span><i class="fa-solid fa-trash-can"></i></span>
+            <span><i class="fa-solid fa-trash-can" onclick="confirmDeleteModal('${fileName}')"></i></span>
         `;
         fileListContainer.appendChild(fileElement);
     });
@@ -96,7 +98,7 @@ async function downloadFiles() {
 
             const disposition = response.headers.get('Content-Disposition');
             const filename = disposition
-                ? disposition.split('filename=')[1].replace(/"/g,'')
+                ? disposition.split('filename=')[1].replace(/"/g, '')
                 : 'file.zip';   //Nombre en caso de error
 
             //console.log(downloadUrls)
@@ -168,6 +170,13 @@ function closeModal(modalId) {
     }
 }
 
+//Mostrar modal de confirmacion a eliminar
+function confirmDeleteModal(fileName) {
+    fileToDelete = fileName; // Almacena el archivo seleccionado
+    openModal('confirmDeleteModal');
+}
+
+
 function uploadFile() {
 
     const file = document.getElementById('fileUpload');
@@ -210,6 +219,34 @@ function uploadFile() {
     closeModal('uploadModal');
 
 }
+
+async function deleteFile() {
+    const userId = localStorage.getItem('user_id');
+    if (!fileToDelete || !userId) return;
+
+    try {
+        const response = await fetch(`/home/delete`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName: fileToDelete, userId }),
+        });
+
+        if (response.ok) {
+            alert('Archivo eliminado correctamente');
+            loadFiles();
+        } else {
+            const error = await response.json();
+            alert(`Error al eliminar el archivo: ${error.message}`);
+        }
+    } catch (error) {
+        console.error('Error al eliminar el archivo:', error);
+        alert('Hubo un problema eliminando el archivo');
+    } finally {
+        closeModal('confirmDeleteModal');
+    }
+}
+
+document.getElementById('confirmdeleteButton').onclick = deleteFile;
 
 // //Mostrar/Obtener los archivos en front
 // async function getFiles() {

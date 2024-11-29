@@ -37,12 +37,11 @@
                 <span>Título del Archivo</span>
                 <span>Peso</span>
                 <span>Fecha de subida</span>
-                <span></span>
+                <span></span> <!-- Espacio de icono de basura-->
             </div>
 
             <!-- Aqui se debera de mostrar el contenid -->
-            <div id="fileListContainer">
-            </div>
+            <div id="fileListContainer"> </div>
             <!-- <button onclick="downloadFiles()">Descargar</button> -->
         </section>
     </main>
@@ -69,6 +68,17 @@
             </div>
             <div class="modal-actions">
                 <button onclick="closeModal('downloadModal')">Cerrar</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Modal de confirmación -->
+    <aside id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <h2>¿Estás seguro de que deseas eliminar este archivo?</h2>
+            <div class="modal-actions">
+                <button id="confirmDeleteButton">Eliminar</button>
+                <button onclick="closeModal('confirmDeleteModal')">Cancelar</button>
             </div>
         </div>
     </aside>
