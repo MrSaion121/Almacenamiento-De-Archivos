@@ -198,7 +198,7 @@ function uploadFile() {
 //     }
 // }
 
-document.addEventListener('DOMContentLoaded', getFiles);
+// document.addEventListener('DOMContentLoaded', getFiles);
 
 
 
