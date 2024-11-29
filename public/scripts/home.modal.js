@@ -246,7 +246,7 @@ async function deleteFile() {
     }
 }
 
-document.getElementById('confirmdeleteButton').onclick = deleteFile;
+document.getElementById('confirmDeleteButton').onclick = deleteFile;
 
 // //Mostrar/Obtener los archivos en front
 // async function getFiles() {
