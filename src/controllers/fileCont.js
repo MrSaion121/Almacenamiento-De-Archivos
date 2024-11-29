@@ -1,6 +1,8 @@
-const { s3 } = require("../models/aws");
+const { s3, bucket } = require("../models/aws");
 const FileModel = require('../models/file');
 const generateDownloadUrls = require('../services/download.service')
+const archiver = require ('archiver');
+
 
 //Registrar el archivo subido - RDS
 const uploadFileToDB = async (req, res, next) => {
@@ -42,7 +44,7 @@ const listFiles = async (req, res) => {
             LastModified: file.LastModified
         }));
         res.status(200).json(files);
-    } catch(error){
+    } catch (error) {
         console.error('Error fetching archivos desde S3:', error);
         res.status(500).json({ message: "Error al listar los archivos" });
     }
@@ -67,6 +69,43 @@ const listFiles = async (req, res) => {
 
 const downloadFiles = async (req, res) => {
     const { files, userId } = req.body
+
+    try {
+        //Descarga de archivo
+        res.setHeader('Content-Type', 'application/zip');
+        res.setHeader('Content-Disposition', 'attachment; filename=comprimedFiles.zip');
+
+        //Creacion de zip
+        const archive = archiver('zip', {zlib: {level: 9}});
+
+        //manejamiento de errores
+        archive.on('error', (error)=>{
+            console.error('Error al crear el archivo zip:', error);
+            res.status(500).json({ message: "Error al crear el archivo zip" });
+        })
+
+        //Conectar el stream del .zip con respuesta http
+        archive.pipe(res);
+
+        //añadir los archivos seleccionado
+        for (const fileName of files){
+            const fileKey = `${userId}/${fileName}`;
+            const fileStream = s3.getObject({ Bucket: bucket, Key, fileKey }).createReadStream();
+
+            archive.append(fileStream, {name: fileName});
+
+            await archive.finalize();
+        }
+    } catch (error) {
+        console.error('Error al descargar archivos:', error);
+        res.status(500).json({ message: 'Error descargando archivos.', error: error.message });
+    }
+}
+
+
+/*
+const downloadFiles = async (req, res) => {
+    const { files, userId } = req.body
     
     try {
         const downloadUrls = await generateDownloadUrls(userId, files);
@@ -75,5 +114,6 @@ const downloadFiles = async (req, res) => {
         res.status(500).json({ message: 'Error descargando archivos.', error: error.message });
     }
 }
+*/
 
 module.exports = { listFiles, uploadFileToDB, downloadFiles };

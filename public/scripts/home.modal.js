@@ -72,6 +72,45 @@ async function loadFiles() {
     });
 }
 
+
+//Funcion para descargar Archivos descargados.
+async function downloadFiles() {
+    const userId = localStorage.getItem('user_id');
+    const selectedFiles = Array.from(document.querySelectorAll(".file-list-item input[type='checkbox']:checked"))
+        .map(input => input.value); // Obtener las claves de los archivos seleccionados
+    console.log(selectedFiles)
+    if (selectedFiles.length > 0) {
+        const response = await fetch('/home/download', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ files: selectedFiles, userId })
+        });
+
+        if (response.ok) {
+            //Descargar el .zip directamente
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+
+            //console.log(downloadUrls)
+            const a = document.createElement('a');
+
+            a.href = url;
+            a.download = 'comprimedFiles.zip'; // Asignar el nombre del archivo si es necesario
+            a.click();
+
+            URL.revokeObjectURL(url);
+            openModal('downloadModal');
+        } else {
+            alert('Hubo un error al obtener los archivos para descargar.');
+        }
+    } else {
+        alert("Selecciona al menos un archivo para descargar.");
+    }
+}
+
+/*
 //Funcion para descargar Archivos descargados.
 async function downloadFiles() {
     const userId = localStorage.getItem('user_id');
@@ -105,6 +144,7 @@ async function downloadFiles() {
         alert("Selecciona al menos un archivo para descargar.");
     }
 }
+*/
 
 // Función para abrir el modal
 function openModal(modalId) {
