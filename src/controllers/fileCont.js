@@ -74,13 +74,15 @@ const downloadFiles = async (req, res) => {
 
         //Formato de zip
         const now = new Date();
+        const utcOffset = now.getTimezoneOffset(); // Offset en minutos
+        const gmt6Date = new Date(now.getTime() - (utcOffset + 360) * 60000); // Ajuste a GMT-6
 
         //Formato fecha
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const day = String(gmt6Date.getDate()).padStart(2, '0');
+        const month = String(gmt6Date.getMonth() + 1).padStart(2, '0');
+        const year = gmt6Date.getFullYear();
+        const hours = String(gmt6Date.getHours()).padStart(2, '0');
+        const minutes = String(gmt6Date.getMinutes()).padStart(2, '0');
 
         const timestamp = `${day}${month}${year}-${hours}-${minutes}`;
         const zipFileName = `files-${timestamp}.zip`;
