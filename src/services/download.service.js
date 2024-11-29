@@ -2,6 +2,7 @@ const { s3, bucket } = require('../models/aws');
 
 async function generateDownloadUrls(userId, files) {
     const expirationTime = 60 * 5; 
+    console.log('Consiguiendo los objetos')
 
     const promises = files.map((fileName) => {
         const params = {

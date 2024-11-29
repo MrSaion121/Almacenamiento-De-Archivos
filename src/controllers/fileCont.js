@@ -70,7 +70,7 @@ const downloadFiles = async (req, res) => {
     
     try {
         const downloadUrls = await generateDownloadUrls(userId, files);
-        res.status(200).json({ message: 'Archivos descargados exitosamente.', files: downloadedFiles });
+        res.status(200).json({ message: 'Archivos descargados exitosamente.', files: downloadUrls });
     } catch (error) {
         res.status(500).json({ message: 'Error descargando archivos.', error: error.message });
     }
