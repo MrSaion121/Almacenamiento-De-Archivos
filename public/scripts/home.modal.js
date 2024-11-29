@@ -158,6 +158,36 @@ function uploadFile() {
 
 }
 
+async function getFiles() {
+    const userId = localStorage.getItem('user_id');
+    
+    try {
+        const response = await fetch(`/home/uploads/${userId}`);
+        const files = await response.json();
+
+        const fileListContainer = document.getElementById('fileListContainer');
+        fileListContainer.innerHTML = '';
+
+        file.forEach(file => {
+            const fileElement = document.createElement('div');
+            fileElement.innerHTML = `
+                <input type="checkbox" value="${file.Key}" id="file-${file.Key}">
+                <label for="file-${file.Key}">${file.Key}</label>
+                <span>${(file.Size / 1024).toFixed(2)} KB</span>
+                <span>${new Date(file.LastModified).toLocaleDateString()}</span>
+            `;
+            fileListContainer.appendChild(fileElement);
+        });
+    } catch(error){
+        console.error('Error Loading files:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', getFiles);
+
+
+
+/*
 function getFiles() {
     const userId = localStorage.getItem('user_id');
     const formData = new FormData();
@@ -171,3 +201,4 @@ function getFiles() {
             console.error('Error:', error);
         });
 }
+*/

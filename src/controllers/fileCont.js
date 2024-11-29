@@ -27,6 +27,28 @@ const uploadFileToDB = async (req, res, next) => {
 }
 
 const listFiles = async (req, res) => {
+    const { userId } = req.params;
+    const params = {
+        Bucket: `${process.env.AWS_BUCKET_NAME}`,
+        Prefix: `${userId}/`
+    };
+
+    try {
+        const data = await s3.listObjectsV2(params).promise();
+        const files = data.Contents.map(file => ({
+            Key: file.Key,
+            Size: file.Size,
+            LastModified: file.LastModified
+        }));
+        res.status(200).json(files);
+    } catch(error){
+        console.error('Error fetching archivos desde S3:', error);
+        res.status(500).json({ message: "Error al listar los archivos" });
+    }
+};
+
+/*
+const listFiles = async (req, res) => {
     //console.log(req.body.userId)
     const { userId } = req.params
     //console.log(userId);
@@ -40,5 +62,6 @@ const listFiles = async (req, res) => {
     })
 
 }
+*/
 
 module.exports = { listFiles, uploadFileToDB };
