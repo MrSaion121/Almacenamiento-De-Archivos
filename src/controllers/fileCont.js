@@ -90,12 +90,12 @@ const downloadFiles = async (req, res) => {
         //añadir los archivos seleccionado
         for (const fileName of files){
             const fileKey = `${userId}/${fileName}`;
-            const fileStream = s3.getObject({ Bucket: bucket, Key, fileKey }).createReadStream();
+            const fileStream = s3.getObject({ Bucket: bucket, Key: fileKey }).createReadStream();
 
             archive.append(fileStream, {name: fileName});
-
-            await archive.finalize();
         }
+        //finalizado el zip
+        await archive.finalize();
     } catch (error) {
         console.error('Error al descargar archivos:', error);
         res.status(500).json({ message: 'Error descargando archivos.', error: error.message });
