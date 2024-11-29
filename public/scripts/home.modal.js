@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    getFiles();
+    //getFiles();
     updateAccountButton();
     updateUserName();
     loadFiles(); //Carga de archivos al iniciar
