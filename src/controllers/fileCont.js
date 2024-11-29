@@ -71,9 +71,23 @@ const downloadFiles = async (req, res) => {
     const { files, userId } = req.body
 
     try {
+
+        //Formato de zip
+        const now = Date();
+        const timestamp = now.toLocalString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        }).replace(/,/g, '-').replace(/:/g, '-').replace(/ /g, '');
+
+        const zipFileName = `files-${timestamp}.zip`;
+
         //Descarga de archivo
         res.setHeader('Content-Type', 'application/zip');
-        res.setHeader('Content-Disposition', 'attachment; filename=comprimedFiles.zip');
+        res.setHeader('Content-Disposition', `attachment; filename=${zipFileName}`);
 
         //Creacion de zip
         const archive = archiver('zip', {zlib: {level: 9}});

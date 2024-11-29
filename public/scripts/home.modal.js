@@ -67,6 +67,7 @@ async function loadFiles() {
             <label for="file-${fileName}">${fileName}</label>
             <span>${(file.Size / 1024).toFixed(2)} KB</span>
             <span>${new Date(file.LastModified).toLocaleDateString()}</span>
+            <span><i class="fa-solid fa-trash-can"></i></span>
         `;
         fileListContainer.appendChild(fileElement);
     });
@@ -93,11 +94,16 @@ async function downloadFiles() {
             const blob = await response.blob();
             const url = URL.createObjectURL(blob);
 
+            const disposition = response.headers.get('Content-Disposition');
+            const filename = disposition
+                ? disposition.split('filename=')[1].replace(/"/g,'')
+                : 'file.zip';   //Nombre en caso de error
+
             //console.log(downloadUrls)
             const a = document.createElement('a');
 
             a.href = url;
-            a.download = 'comprimedFiles.zip'; // Asignar el nombre del archivo si es necesario
+            a.download = filename; // Asignar el nombre del archivo si es necesario
             a.click();
 
             URL.revokeObjectURL(url);
