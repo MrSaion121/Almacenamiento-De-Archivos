@@ -116,7 +116,7 @@ async function loadFiles() {
             <label for="file-${fileName}">${fileName}</label>
             <span>${(file.Size / 1024).toFixed(2)} KB</span>
             <span>${new Date(file.LastModified).toLocaleDateString()}</span>
-            <span><i class="fa-solid fa-trash-can" onclick="confirmDeleteModal('${fileName}')"></i></span>
+            <span class="icono"><i class="fa-solid fa-trash-can" onclick="confirmDeleteModal('${fileName}')"></i></span>
         `;
         fileListContainer.appendChild(fileElement);
     });
