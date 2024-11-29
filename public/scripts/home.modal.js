@@ -57,6 +57,7 @@ async function loadFiles() {
 
     //DOM
     files.forEach(file => {
+        console.log(file.Key)
         const fileElement = document.createElement('div');
         fileElement.classList.add('file-list-item');
         fileElement.innerHTML = `
