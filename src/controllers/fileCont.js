@@ -76,4 +76,4 @@ const downloadFiles = async (req, res) => {
     }
 }
 
-module.exports = { listFiles, uploadFileToDB };
+module.exports = { listFiles, uploadFileToDB, downloadFiles };

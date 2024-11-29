@@ -53,4 +53,6 @@ router.post('/uploads', upload.single('file'), uploadFileToDB, async (req, res) 
 */
 router.get('/uploads/:userId', listFiles);
 
+router.post('/download', downloadFiles)
+
 module.exports = router;

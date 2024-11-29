@@ -71,6 +71,7 @@ async function loadFiles() {
 
 //Funcion para descargar Archivos descargados.
 async function downloadFiles() {
+    const userId = localStorage.getItem('user_id');
     const selectedFiles = Array.from(document.querySelectorAll(".file-list-item input[type='checkbox']:checked"))
         .map(input => input.value); // Obtener las claves de los archivos seleccionados
     console.log(selectedFiles)
@@ -80,7 +81,7 @@ async function downloadFiles() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ files: selectedFiles })
+            body: JSON.stringify({ files: selectedFiles, userId })
         });
 
         if (response.ok) {
